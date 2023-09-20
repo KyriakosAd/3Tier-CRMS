@@ -1,0 +1,19 @@
+<h1 class="text-center" style="margin-bottom: 6%;">Get Lectures</h1>
+<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10%;">
+    <div style="width:60%; border: 1px solid #ccc; padding: 25px; padding-left: 35px; height: 500px; overflow-y: auto; margin-bottom: 2%;">
+      <div style="margin-bottom: 3%;">
+        <strong style="font-size: 1.3em;">Output:</strong>
+      </div>
+      <div *ngFor="let lecture of lectures; let last = last">
+        <div *ngIf="lecture.id !== undefined && lecture.id !== null" style="font-size: 1.1em; padding-left: 40px;">
+          <strong>ID: </strong>
+          <a [routerLink]="'/GetLecture/' + lecture.id" style="font-size: 1.15em; cursor: pointer;">{{ lecture.id }}</a><br>
+          <strong>Type: </strong> <span style="font-size: 1.15em;">{{lecture.type}}</span><br>
+          <strong>Course Name: </strong> <span style="font-size: 1.15em;">{{lecture.courseName}}</span><br>
+          <strong>Semester: </strong> <span style="font-size: 1.15em;">{{lecture.semester}}</span><br>
+          <strong>Department: </strong> <span style="font-size: 1.15em;">{{lecture.department}}</span><br>
+        </div>
+        <hr *ngIf="!last">
+      </div>
+    </div>
+</div>

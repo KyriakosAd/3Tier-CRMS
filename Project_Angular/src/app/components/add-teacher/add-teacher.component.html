@@ -1,0 +1,56 @@
+<h1 class="text-center" style="margin-bottom: 6%;">Add Teacher</h1>
+<div style="display: flex;">
+    <div style="flex: 1; margin-right: 20px; width: 90%;">
+        <div id="teacherForm" [ngClass]="disabled">
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="name" style="font-weight: bold; font-size: 1.1em;">Name:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" [ngModel]="currentTeacher.name"
+                        (ngModelChange)="currentTeacher.name = $event" style="flex-grow: 1;">
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="type" style="font-weight: bold; font-size: 1.1em;">Type:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="type" name="type" [ngModel]="currentTeacher.type" (ngModelChange)="currentTeacher.type = $event" style="flex-grow: 1;">
+                        <option value="Research">Research</option>
+                        <option value="Theory">Theory</option>
+                        <option value="Laboratory">Laboratory</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="userId" style="font-weight: bold; font-size: 1.1em;">User:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="userId" name="userId" [ngModel]="currentTeacher.userId" (ngModelChange)="currentTeacher.userId = $event" style="flex-grow: 1;">
+                        <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 25%; margin-left: 55%;" class="d-grid p-2">
+                <button class="btn btn-primary btn-block" type="button" (click)="SubmitTeacher()"><span style="white-space: nowrap;">Submit Teacher</span></button>
+                <div [ngClass]="load" style="text-align: center; margin-top: 10px;">
+                    <strong>Working...</strong>
+                </div>            
+            </div>
+        </div>
+    </div>
+    
+    <div style="flex: 0.8; border: 1px solid #ccc; padding: 25px; padding-left: 35px; height: 400px; overflow-y: auto; margin-bottom: 10%;">
+        <div style="margin-bottom: 2%;">
+            <strong style="font-size: 1.3em;">Output:</strong>
+        </div>
+        <div *ngIf="resultTeacher.id !== undefined && resultTeacher.id !== null" style="font-size: 1.1em; padding-left: 10px;">
+            <strong>ID: </strong> <span style="font-size: 1.15em;">{{resultTeacher.id}}</span><br>
+            <strong>Name: </strong> <span style="font-size: 1.15em;">{{resultTeacher.name}}</span><br>
+            <strong>Type: </strong> <span style="font-size: 1.15em;">{{resultTeacher.type}}</span><br>
+            <strong>User ID: </strong> <span style="font-size: 1.15em;">{{resultTeacher.userId}}</span><br>
+        </div>
+    </div>
+</div>

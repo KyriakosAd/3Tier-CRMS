@@ -1,0 +1,213 @@
+<h1 class="text-center" style="margin-bottom: 6%;">Add Reservation</h1>
+<div style="display: flex;">
+    <div style="flex: 1; margin-right: 20px; width: 90%;">
+        <div id="reservationForm" [ngClass]="disabled">
+            <form>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 18%; white-space: nowrap;">
+                    <label for="roomId" style="font-weight: bold; font-size: 1.1em;">Room:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="roomId" name="roomId" [ngModel]="currentReservation.roomId" (ngModelChange)="currentReservation.roomId = $event; GetRoomAvailabilities(currentReservation.roomId); GetRoomReservations(currentReservation.roomId);" style="flex-grow: 1;">
+                        <option *ngFor="let room of rooms" [value]="room.id">{{ room.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 18%; white-space: nowrap;">
+                    <label for="isRecurring" style="font-weight: bold; font-size: 1.1em;">Is Recurring:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="checkbox" id="isRecurring" name="isRecurring" [ngModel]="currentReservation.isRecurring"
+                        (ngModelChange)="currentReservation.isRecurring = $event" style="flex-grow: 1;">
+                </div>
+            </div>
+            <div *ngIf="currentReservation.isRecurring" style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 18%; white-space: nowrap;">
+                    <label for="startDate" style="font-weight: bold; font-size: 1.1em;">Start Date:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <div class="col-xs-12 col-12 col-md-4 form-group mb-3">
+                        <input type="text" id="startDate" name="startDate" placeholder="Start Date" class="form-control" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [minDate]="minDate" [maxDate]="maxDate" 
+                        [ngModel]="currentReservation.startDate" (ngModelChange)="currentReservation.startDate = $event" style="flex-grow: 1;" bsDatepicker>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="currentReservation.isRecurring" style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 18%; white-space: nowrap;">
+                    <label for="endDate" style="font-weight: bold; font-size: 1.1em;">End Date:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <div class="col-xs-12 col-12 col-md-4 form-group mb-3">
+                        <input type="text" id="endDate" name="endDate" placeholder="End Date" class="form-control" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [minDate]="minDate" [maxDate]="maxDate" 
+                        [ngModel]="currentReservation.endDate" (ngModelChange)="currentReservation.endDate = $event" style="flex-grow: 1;" bsDatepicker>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!currentReservation.isRecurring" style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 18%; white-space: nowrap;">
+                    <label for="exactDate" style="font-weight: bold; font-size: 1.1em;">Exact Date:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <div class="col-xs-12 col-12 col-md-4 form-group mb-3">
+                        <input type="text" id="exactDate" name="exactDate" placeholder="Exact Date" class="form-control" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [minDate]="minDate" [maxDate]="maxDate" 
+                        [ngModel]="currentReservation.exactDate" (ngModelChange)="currentReservation.exactDate = $event" style="flex-grow: 1;" bsDatepicker>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="currentReservation.isRecurring" style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 18%; white-space: nowrap;">
+                    <label for="day" style="font-weight: bold; font-size: 1.1em;">Day:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="day" name="day" [ngModel]="currentReservation.day" (ngModelChange)="currentReservation.day = $event" style="flex-grow: 1;">
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="6">Saturday</option>
+                        <option value="7">Sunday</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 18%; white-space: nowrap;">
+                    <label style="font-weight: bold; font-size: 1.1em;">Start Time:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <timepicker id="startTime" name="startTime" [(ngModel)]="tempStartTime" (ngModelChange)="currentReservation.startTime = $event ? ($event.getHours() * 100 + $event.getMinutes()) : 0;
+                    tempStartTime = $event;" [showMeridian]="false" [min]="minStartTime" [max]="maxStartTime"></timepicker>
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 25px; align-items: center;">
+                <div style="min-width: 18%; white-space: nowrap;">
+                    <label style="font-weight: bold; font-size: 1.1em;">End Time:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <timepicker id="endTime" name="endTime" [(ngModel)]="tempEndTime" (ngModelChange)="currentReservation.endTime = $event ? ($event.getHours() * 100 + $event.getMinutes()) : 0;
+                    tempEndTime = $event;" [showMeridian]="false" [min]="minEndTime" [max]="maxEndTime"></timepicker>
+                </div>
+            </div>
+            <div style="width: 25%; margin-left: 46%;" class="d-grid p-2">
+                <button class="btn btn-primary btn-block" type="button" (click)="SubmitReservation();"><span style="white-space: nowrap;">Submit Reservation</span></button>
+                <div [ngClass]="load" style="text-align: center; margin-top: 10px;">
+                    <strong>Working...</strong>
+                </div>            
+            </div>
+        </form>
+        </div>
+    </div>
+    
+    <div style="flex: 1; margin-bottom: 2%;">
+        <div style="border: 1px solid #ccc; padding: 15px; padding-left: 35px; height: 300px; overflow-y: auto; margin-bottom: 2%;">
+            <div style="margin-bottom: 1%;">
+                <strong style="font-size: 1.3em;">Room:</strong>
+            </div>
+            <div *ngIf="currentReservation.roomId !== undefined && currentReservation.roomId !== null" style="font-size: 1.1em; padding-left: 10px;">
+                <strong>ID: </strong> <span style="font-size: 1.15em;">{{ currentReservation.roomId }}</span><br>
+                <strong>Name: </strong><span style="font-size: 1.15em;">{{ getRoomName(currentReservation.roomId) }}</span><br>
+                <strong *ngIf="roomAvailabilities.length <= 0">Not Available.<br></strong>
+                <span *ngIf="roomAvailabilities.length > 0">
+                <strong>Available: </strong>
+                    <div *ngFor="let roomAvailability of roomAvailabilities;" style="font-size: 1.15em; padding-left: 20px;">
+                        {{
+                            (roomAvailability.day == 1 ? 'Monday' :
+                            roomAvailability.day == 2 ? 'Tuesday' :
+                            roomAvailability.day == 3 ? 'Wednesday' :
+                            roomAvailability.day == 4 ? 'Thursday' :
+                            roomAvailability.day == 5 ? 'Friday' :
+                            roomAvailability.day == 6 ? 'Saturday' :
+                            roomAvailability.day == 7 ? 'Sunday' :
+                            '')
+                            + " " + (roomAvailability.startTime / 100).toFixed(2).replace('.', ':') + "-"
+                            + (roomAvailability.endTime / 100).toFixed(2).replace('.', ':')
+                        }}
+                    </div>
+                </span>
+                <span *ngIf="reservations.length > 0">
+                    <strong>Reserved: </strong>
+                        <div *ngFor="let reservation of reservations;" style="font-size: 1.15em; padding-left: 20px;">
+                            <span *ngIf="reservation.isRecurring">
+                            <span style="font-size: 0.90em">
+                            {{
+                                "(" + (reservation.startDate | date:'dd/MM/yyyy') + " - " +
+                                (reservation.endDate | date:'dd/MM/yyyy') + ") "
+                            }}
+                            </span>
+                            <strong>
+                            {{
+                                (reservation.day == 1 ? 'Monday' :
+                                reservation.day == 2 ? 'Tuesday' :
+                                reservation.day == 3 ? 'Wednesday' :
+                                reservation.day == 4 ? 'Thursday' :
+                                reservation.day == 5 ? 'Friday' :
+                                reservation.day == 6 ? 'Saturday' :
+                                reservation.day == 7 ? 'Sunday' :
+                                '')
+                                + " " + (reservation.startTime / 100).toFixed(2).replace('.', ':') + "-"
+                                + (reservation.endTime / 100).toFixed(2).replace('.', ':')
+                            }}
+                            </strong>
+                            </span>
+                            <span *ngIf="!reservation.isRecurring">
+                            <span style="font-size: 0.90em">
+                            {{
+                                "(" + (reservation.exactDate | date:'dd/MM/yyyy') + ") "
+                            }}
+                            </span>
+                            <strong>
+                            {{
+                                (getDayNumber(reservation.exactDate) == 1 ? 'Monday' :
+                                getDayNumber(reservation.exactDate) == 2 ? 'Tuesday' :
+                                getDayNumber(reservation.exactDate) == 3 ? 'Wednesday' :
+                                getDayNumber(reservation.exactDate) == 4 ? 'Thursday' :
+                                getDayNumber(reservation.exactDate) == 5 ? 'Friday' :
+                                getDayNumber(reservation.exactDate) == 6 ? 'Saturday' :
+                                getDayNumber(reservation.exactDate) == 7 ? 'Sunday' :
+                                '')
+                                + " " + (reservation.startTime / 100).toFixed(2).replace('.', ':') + "-"
+                                + (reservation.endTime / 100).toFixed(2).replace('.', ':')
+                            }}
+                            </strong>
+                            </span>
+                        </div>
+                    </span>
+            </div>
+        </div>
+        <div style="border: 1px solid #ccc; padding: 25px; padding-left: 35px; height: 370px; overflow-y: auto;">
+            <div style="margin-bottom: 2%;">
+                <strong style="font-size: 1.3em;">Output:</strong>
+            </div>
+            <div *ngIf="resultReservation.id !== undefined && resultReservation.id !== null" style="font-size: 1.1em; padding-left: 10px;">
+                <strong>ID: </strong> <span style="font-size: 1.15em;">{{ resultReservation.id }}</span><br>
+                <strong>Room: </strong><span style="font-size: 1.15em;">{{ getRoomName(resultReservation.roomId) }}</span><br>
+                <strong>Entry Date: </strong><span style="font-size: 1.15em;">
+                    {{ resultReservation.entryDate | date:'dd/MM/yyyy' }}
+                </span><br>
+                <strong>Is Recurring: </strong><span style="font-size: 1.15em;">{{ resultReservation.isRecurring }}</span><br>
+                <span *ngIf="resultReservation.isRecurring"><strong>Start Date: </strong><span style="font-size: 1.15em;">
+                    {{ resultReservation.startDate | date:'dd/MM/yyyy' }}
+                </span><br></span>
+                <span *ngIf="resultReservation.isRecurring"><strong>End Date: </strong><span style="font-size: 1.15em;">
+                    {{ resultReservation.endDate | date:'dd/MM/yyyy' }}
+                </span><br></span>
+                <span *ngIf="!resultReservation.isRecurring"><strong>Exact Date: </strong><span style="font-size: 1.15em;">
+                    {{ resultReservation.exactDate | date:'dd/MM/yyyy' }}
+                </span><br></span>
+                <span *ngIf="resultReservation.isRecurring"><strong>Day: </strong> <span style="font-size: 1.15em;">{{
+                    resultReservation.day == 1 ? 'Monday' :
+                    resultReservation.day == 2 ? 'Tuesday' :
+                    resultReservation.day == 3 ? 'Wednesday' :
+                    resultReservation.day == 4 ? 'Thursday' :
+                    resultReservation.day == 5 ? 'Friday' :
+                    resultReservation.day == 6 ? 'Saturday' :
+                    resultReservation.day == 7 ? 'Sunday' :
+                    ''
+                }}</span><br></span>
+                <strong>Start Time: </strong> <span style="font-size: 1.15em;">{{ (resultReservation.startTime / 100).toFixed(2).replace('.', ':') }}</span><br>
+                <strong>End Time: </strong> <span style="font-size: 1.15em;">{{ (resultReservation.endTime / 100).toFixed(2).replace('.', ':') }}</span>
+            </div>
+        </div>
+    </div>
+</div>

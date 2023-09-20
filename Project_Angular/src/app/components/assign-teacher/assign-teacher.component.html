@@ -1,0 +1,44 @@
+<h1 class="text-center" style="margin-bottom: 6%;">Add Teacher - Lecture</h1>
+<div style="display: flex;">
+    <div style="flex: 1; margin-right: 20px; width: 90%;">
+        <div id="userForm" [ngClass]="disabled">
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="teacherId" style="font-weight: bold; font-size: 1.1em;">Teacher:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="teacherId" name="teacherId" [ngModel]="currentTeacherLecture.teacherId" (ngModelChange)="currentTeacherLecture.teacherId = $event" style="flex-grow: 1;">
+                        <option *ngFor="let teacher of teachers" [value]="teacher.id">{{ "(id:" + teacher.id + ") " + teacher.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="lectureId" style="font-weight: bold; font-size: 1.1em;">Lecture:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="lectureId" name="lectureId" [ngModel]="currentTeacherLecture.lectureId" (ngModelChange)="currentTeacherLecture.lectureId = $event" style="flex-grow: 1;">
+                        <option *ngFor="let lecture of lectures" [value]="lecture.id">{{ "(id:" + lecture.id + ") " + lecture.courseName }}</option>
+                    </select>
+                </div>
+            </div>
+            <div style="width: 25%; margin-left: 55%;" class="d-grid p-2">
+                <button class="btn btn-primary btn-block" type="button" (click)="SubmitTeacherLecture()"><span style="white-space: nowrap;">Submit</span></button>
+                <div [ngClass]="load" style="text-align: center; margin-top: 10px;">
+                    <strong>Working...</strong>
+                </div>            
+            </div>
+        </div>
+    </div>
+    
+    <div style="flex: 0.8; border: 1px solid #ccc; padding: 25px; padding-left: 35px; height: 300px; overflow-y: auto; margin-bottom: 10%;">
+        <div style="margin-bottom: 2%;">
+            <strong style="font-size: 1.3em;">Output:</strong>
+        </div>
+        <div *ngIf="resultTeacherLecture.teacherId !== undefined && resultTeacherLecture.teacherId !== null &&
+                resultTeacherLecture.lectureId !== undefined && resultTeacherLecture.lectureId !== null" style="font-size: 1.1em; padding-left: 10px;">
+            <strong>Room ID: </strong> <span style="font-size: 1.15em;">{{resultTeacherLecture.teacherId}}</span><br>
+            <strong>Teacher ID: </strong> <span style="font-size: 1.15em;">{{resultTeacherLecture.lectureId}}</span><br>
+        </div>
+    </div>
+</div>

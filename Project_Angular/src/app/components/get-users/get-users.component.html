@@ -1,0 +1,19 @@
+<h1 class="text-center" style="margin-bottom: 6%;">Get Users</h1>
+<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10%;">
+    <div style="width:60%; border: 1px solid #ccc; padding: 25px; padding-left: 35px; height: 500px; overflow-y: auto; margin-bottom: 2%;">
+      <div style="margin-bottom: 3%;">
+        <strong style="font-size: 1.3em;">Output:</strong>
+      </div>
+      <div *ngFor="let user of users; let last = last">
+        <div *ngIf="user.id !== undefined && user.id !== null" style="font-size: 1.1em; padding-left: 40px;">
+          <strong>ID: </strong>
+          <a [routerLink]="'/GetUser/' + user.id" style="font-size: 1.15em; cursor: pointer;">{{ user.id }}</a><br>
+          <strong>Name: </strong> <span style="font-size: 1.15em;">{{ user.name }}</span><br>
+          <strong>Email: </strong> <span style="font-size: 1.15em;">{{ user.email }}</span><br>
+          <strong>Department: </strong> <span style="font-size: 1.15em;">{{ user.department }}</span><br>
+          <strong>Role: </strong> <span style="font-size: 1.15em;">{{ user.role }}</span><br>
+        </div>
+        <hr *ngIf="!last">
+      </div>
+    </div>
+</div>

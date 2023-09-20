@@ -1,0 +1,42 @@
+<h1 class="text-center" style="margin-bottom: 6%;">Get Room ID {{ roomId }}</h1>
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div style="width:60%; border: 1px solid #ccc; padding: 25px; padding-left: 35px; height: 500px; overflow-y: auto; margin-bottom: 2%;">
+      <div style="margin-bottom: 3%;">
+        <strong style="font-size: 1.3em;">Output:</strong>
+        </div>
+        <div *ngIf="room.id !== undefined && room.id !== null" style="font-size: 1.1em; padding-left: 40px;">
+            <strong>ID: </strong> <span style="font-size: 1.15em;">{{ room.id }}</span><br>
+            <strong>Name: </strong> <span style="font-size: 1.15em;">{{ room.name }}</span><br>
+            <strong>Building: </strong> <span style="font-size: 1.15em;">{{ room.building }}</span><br>
+            <strong>Building Address: </strong> <span style="font-size: 1.15em;">{{ room.buildingAddress }}</span><br>
+            <strong>Capacity: </strong> <span style="font-size: 1.15em;">{{ room.capacity }}</span><br>
+            <strong>Type: </strong><span style="font-size: 1.15em;">{{ room.type == 1 ? 'Theory' : room.type == 2 ? 'Laboratory' : '' }}</span><br>
+            <strong>Computers Count: </strong> <span style="font-size: 1.15em;">{{ room.computersCount }}</span><br>
+            <strong>Has Projector: </strong> <span style="font-size: 1.15em;">{{ room.hasProjector }}</span><br>
+            <strong>Is Locked: </strong> <span style="font-size: 1.15em;">{{ room.isLocked }}</span><br>
+            <strong *ngIf="roomAvailabilities.length <= 0">Not Available.</strong>
+            <span *ngIf="roomAvailabilities.length > 0">
+            <strong>Available: </strong>
+                <div *ngFor="let roomAvailability of roomAvailabilities;" style="font-size: 1.15em; padding-left: 20px;">
+                    {{
+                        (roomAvailability.day == 1 ? 'Monday' :
+                        roomAvailability.day == 2 ? 'Tuesday' :
+                        roomAvailability.day == 3 ? 'Wednesday' :
+                        roomAvailability.day == 4 ? 'Thursday' :
+                        roomAvailability.day == 5 ? 'Friday' :
+                        roomAvailability.day == 6 ? 'Saturday' :
+                        roomAvailability.day == 7 ? 'Sunday' :
+                        '')
+                        + " " + (roomAvailability.startTime / 100).toFixed(2).replace('.', ':') + "-"
+                        + (roomAvailability.endTime / 100).toFixed(2).replace('.', ':')
+                    }}
+                </div>
+            <br>
+            </span>
+        </div>
+    </div>
+</div>  
+<div style="width: 20%; margin-left: 35%; margin-bottom: 6%;" class="d-flex p-2 justify-content-between">
+    <button class="btn btn-primary btn-lg" style="margin-right: 25%;" type="button" (click)="UpdateRoom();"><span style="white-space: nowrap;">Update Room</span></button>
+    <button class="btn btn btn-danger btn-lg" type="button" (click)="DeleteRoom();"><span style="white-space: nowrap;">Delete Room</span></button>
+</div>

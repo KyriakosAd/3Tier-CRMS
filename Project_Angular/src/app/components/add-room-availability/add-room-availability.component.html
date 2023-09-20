@@ -1,0 +1,81 @@
+<h1 class="text-center" style="margin-bottom: 6%;">Add Room Availability</h1>
+<div style="display: flex;">
+    <div style="flex: 1; margin-right: 20px; width: 90%;">
+        <div id="roomAvailabilityForm" [ngClass]="disabled">
+            <form>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="roomId" style="font-weight: bold; font-size: 1.1em;">Room:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="roomId" name="roomId" [ngModel]="currentRoomAvailability.roomId" (ngModelChange)="currentRoomAvailability.roomId = $event" style="flex-grow: 1;">
+                        <option *ngFor="let room of rooms" [value]="room.id">{{ room.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="day" style="font-weight: bold; font-size: 1.1em;">Day:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="day" name="day" [ngModel]="currentRoomAvailability.day" (ngModelChange)="currentRoomAvailability.day = $event" style="flex-grow: 1;">
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="6">Saturday</option>
+                        <option value="7">Sunday</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="startTime" style="font-weight: bold; font-size: 1.1em;">Start Time:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <timepicker id="startTime" name="startTime" [(ngModel)]="tempStartTime" (ngModelChange)="currentRoomAvailability.startTime = $event ? ($event.getHours() * 100 + $event.getMinutes()) : 0;
+                    tempStartTime = $event;" [showMeridian]="false" [min]="minStartTime" [max]="maxStartTime"></timepicker>
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 25px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="endTime" style="font-weight: bold; font-size: 1.1em;">End Time:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <timepicker id="endTime" name="endTime" [(ngModel)]="tempEndTime" (ngModelChange)="currentRoomAvailability.endTime = $event ? ($event.getHours() * 100 + $event.getMinutes()) : 0;
+                    tempEndTime = $event;" [showMeridian]="false" [min]="minEndTime" [max]="maxEndTime"></timepicker>
+                </div>
+            </div>
+            <div style="width: 25%; margin-left: 50%;" class="d-grid p-2">
+                <button class="btn btn-primary btn-block" type="button" (click)="SubmitRoomAvailability();"><span style="white-space: nowrap;">Submit Room Availability</span></button>
+                <div [ngClass]="load" style="text-align: center; margin-top: 10px;">
+                    <strong>Working...</strong>
+                </div>            
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <div style="flex: 0.8; border: 1px solid #ccc; padding: 25px; padding-left: 35px; height: 400px; overflow-y: auto; margin-bottom: 10%;">
+        <div style="margin-bottom: 2%;">
+            <strong style="font-size: 1.3em;">Output:</strong>
+        </div>
+        <div *ngIf="resultRoomAvailability.id !== undefined && resultRoomAvailability.id !== null" style="font-size: 1.1em; padding-left: 10px;">
+            <strong>ID: </strong> <span style="font-size: 1.15em;">{{ resultRoomAvailability.id }}</span><br>
+            <strong>Room: </strong><span style="font-size: 1.15em;">{{ getRoomName(resultRoomAvailability.roomId) }}</span><br>
+            <strong>Day: </strong> <span style="font-size: 1.15em;">{{
+                resultRoomAvailability.day == 1 ? 'Monday' :
+                resultRoomAvailability.day == 2 ? 'Tuesday' :
+                resultRoomAvailability.day == 3 ? 'Wednesday' :
+                resultRoomAvailability.day == 4 ? 'Thursday' :
+                resultRoomAvailability.day == 5 ? 'Friday' :
+                resultRoomAvailability.day == 6 ? 'Saturday' :
+                resultRoomAvailability.day == 7 ? 'Sunday' :
+                ''
+              }}</span><br>
+            <strong>Start Time: </strong> <span style="font-size: 1.15em;">{{ (resultRoomAvailability.startTime / 100).toFixed(2).replace('.', ':') }}</span><br>
+            <strong>End Time: </strong> <span style="font-size: 1.15em;">{{ (resultRoomAvailability.endTime / 100).toFixed(2).replace('.', ':') }}</span><br>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<h1 class="text-center" style="margin-bottom: 6%;">Get User ID {{ userId }}</h1>
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div style="width:60%; border: 1px solid #ccc; padding: 25px; padding-left: 35px; height: 500px; overflow-y: auto; margin-bottom: 2%;">
+      <div style="margin-bottom: 3%;">
+        <strong style="font-size: 1.3em;">Output:</strong>
+        </div>
+        <div *ngIf="user.id !== undefined && user.id !== null" style="font-size: 1.1em; padding-left: 40px;">
+            <strong>ID: </strong> <span style="font-size: 1.15em;">{{ user.id }}</span><br>
+            <strong>Name: </strong> <span style="font-size: 1.15em;">{{ user.name }}</span><br>
+            <strong>Password: </strong> <span style="font-size: 1.15em;">{{ user.password }}</span><br>
+            <strong>Email: </strong> <span style="font-size: 1.15em;">{{ user.email }}</span><br>
+            <strong>Department: </strong> <span style="font-size: 1.15em;">{{ user.department }}</span><br>
+            <strong>Role: </strong> <span style="font-size: 1.15em;">{{ user.role }}</span><br>
+        </div>
+    </div>
+</div>  
+<div style="width: 20%; margin-left: 35%; margin-bottom: 6%;" class="d-flex p-2 justify-content-between">
+    <button class="btn btn-primary btn-lg" style="margin-right: 25%;" type="button" (click)="UpdateUser();"><span style="white-space: nowrap;">Update User</span></button>
+    <button class="btn btn btn-danger btn-lg" type="button" (click)="DeleteUser();"><span style="white-space: nowrap;">Delete User</span></button>
+</div>

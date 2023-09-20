@@ -1,0 +1,93 @@
+<h1 class="text-center" style="margin-bottom: 6%;">Get Rooms</h1>
+<div style="display: flex;">
+    <div style="flex: 1; margin-right: 20px; width: 90%;">
+        <div id="roomsForm" [ngClass]="disabled">
+            <form>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="filter" style="font-weight: bold; font-size: 1.1em;">Filter: </label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="filter" name="filter" [ngModel]="filter" (ngModelChange)="filter = $event" style="flex-grow: 1;">
+                        <option value="1">Capacity</option>
+                        <option value="2">Day Available</option>
+                        <option value="3">Time Available</option>
+                    </select>
+                </div>
+            </div>
+            <div *ngIf="filter == 1" style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="capacityFilter" style="font-weight: bold; font-size: 1.1em;">Capacity:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="number" class="form-control" id="capacityFilter" name="capacityFilter" placeholder="Capacity" [ngModel]="capacityFilter"
+                        (ngModelChange)="capacityFilter = $event" style="flex-grow: 1;" min="0" max="300">
+                </div>
+            </div>
+            <div *ngIf="filter == 2" style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="dayFilter" style="font-weight: bold; font-size: 1.1em;">Day:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="dayFilter" name="dayFilter" [ngModel]="dayFilter" (ngModelChange)="dayFilter = $event" style="flex-grow: 1;">
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="6">Saturday</option>
+                        <option value="7">Sunday</option>
+                    </select>
+                </div>
+            </div>
+            <span *ngIf="filter == 3">
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="startTime" style="font-weight: bold; font-size: 1.1em;">Start Time:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <timepicker name="startTime" [(ngModel)]="tempStartTimeFilter" (ngModelChange)="startTimeFilter = $event ? ($event.getHours() * 100 + $event.getMinutes()) : 0;
+                     tempStartTimeFilter = $event;" [showMeridian]="false" [min]="minStartTimeFilter" [max]="maxStartTimeFilter"></timepicker>
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="endTime" style="font-weight: bold; font-size: 1.1em;">End Time:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <timepicker name="endTime" [(ngModel)]="tempEndTimeFilter" (ngModelChange)="endTimeFilter = $event ? ($event.getHours() * 100 + $event.getMinutes()) : 0;
+                    tempEndTimeFilter = $event;" [showMeridian]="false" [min]="minEndTimeFilter" [max]="maxEndTimeFilter"></timepicker>
+                </div>
+            </div>
+            </span>
+            <div style="width: 25%; margin-left: 55%;" class="d-grid p-2">
+                <button class="btn btn-primary btn-block" type="button" (click)="SetFilter();"><span style="white-space: nowrap;">Filter Rooms</span></button>
+                <div [ngClass]="load" style="text-align: center; margin-top: 10px;">
+                    <strong>Working...</strong>
+                </div>
+                <button *ngIf="filter > 0" class="btn btn-danger btn-block" style=" margin-top: 40px;" type="button" (click)="ClearFilter();"><span style="white-space: nowrap;">Clear Filter</span></button>
+            </div>
+        </form>
+        </div>
+    </div>
+    <div style="justify-content: center; align-items: center; width:60%; border: 1px solid #ccc; padding: 25px; padding-left: 35px; height: 500px; overflow-y: auto; margin-bottom: 10%;">
+        <div style="margin-bottom: 3%;">
+            <strong style="font-size: 1.3em;">Output:</strong>
+        </div>
+        <div *ngFor="let room of rooms; let last = last">
+            <div *ngIf="room.id !== undefined && room.id !== null" style="font-size: 1.1em; padding-left: 40px;">
+                <strong>ID: </strong>
+                <a [routerLink]="'/GetRoom/' + room.id" style="font-size: 1.15em; cursor: pointer;">{{ room.id }}</a><br>
+                <strong>Name: </strong> <span style="font-size: 1.15em;">{{ room.name }}</span><br>
+                <strong>Building: </strong> <span style="font-size: 1.15em;">{{ room.building }}</span><br>
+                <strong>Building Address: </strong> <span style="font-size: 1.15em;">{{ room.buildingAddress }}</span><br>
+                <strong>Capacity: </strong> <span style="font-size: 1.15em;">{{ room.capacity }}</span><br>
+                <strong>Type: </strong><span style="font-size: 1.15em;">{{ room.type == 1 ? 'Theory' : room.type == 2 ? 'Laboratory' : '' }}</span><br>
+                <strong>Computers Count: </strong> <span style="font-size: 1.15em;">{{ room.computersCount }}</span><br>
+                <strong>Has Projector: </strong> <span style="font-size: 1.15em;">{{ room.hasProjector }}</span><br>
+                <strong>Is Locked: </strong> <span style="font-size: 1.15em;">{{ room.isLocked }}</span><br>
+            </div>
+            <hr *ngIf="!last">
+        </div>
+    </div>
+</div>

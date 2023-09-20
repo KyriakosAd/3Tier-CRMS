@@ -1,0 +1,85 @@
+<style>
+  .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }
+
+  .nav-item.dropdown .dropdown-menu {
+    display: none;
+  }
+</style>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="./assets/logo.png" alt="University of the Aegean Logo" style="width: 50px; height: 50px;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>      
+      <div class="collapse navbar-collapse" id="navbarSupportContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" [routerLink]="['/']">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              User
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" [routerLink]="['/AddUser']">Add User</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/GetUsers']">Get Users</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="roomDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Room
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="roomDropdown">
+              <li><a class="dropdown-item" [routerLink]="['/AddRoom']">Add Room</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/AddRoomAvailability']">Add Room Availability</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/GetRooms']">Get Rooms</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="reservationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Reservation
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="reservationDropdown">
+              <li><a class="dropdown-item" [routerLink]="['/AddReservation']">Add Reservation</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/GetReservations']">Get Reservations</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="lectureDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Lecture
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="lectureDropdown">
+              <li><a class="dropdown-item" [routerLink]="['/AddLecture']">Add Lecture</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/GetLectures']">Get Lectures</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="teacherDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Teacher
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="teacherDropdown">
+              <li><a class="dropdown-item" [routerLink]="['/AddTeacher']">Add Teacher</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/AssignTeacher']">Assign Teacher</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <router-outlet>
+    </router-outlet>
+  </div>
+  <footer class="footer text-muted text-center">
+    <hr>
+    <p>© 2023 University of the Aegean</p>
+  </footer>
+</body>

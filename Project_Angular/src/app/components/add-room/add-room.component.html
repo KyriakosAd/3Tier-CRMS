@@ -1,0 +1,104 @@
+<h1 class="text-center" style="margin-bottom: 6%;">Add Room</h1>
+<div style="display: flex;">
+    <div style="flex: 1; margin-right: 20px; width: 90%; margin-bottom: 10%;">
+        <div id="roomForm" [ngClass]="disabled">
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="name" style="font-weight: bold; font-size: 1.1em;">Name:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" [ngModel]="currentRoom.name"
+                        (ngModelChange)="currentRoom.name = $event" style="flex-grow: 1;">
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="building" style="font-weight: bold; font-size: 1.1em;">Building:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="text" class="form-control" id="building" name="building" placeholder="Building" [ngModel]="currentRoom.building"
+                        (ngModelChange)="currentRoom.building = $event" style="flex-grow: 1;">
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="buildingAddress" style="font-weight: bold; font-size: 1.1em;">Building Address:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="text" class="form-control" id="buildingAddress" name="buildingAddress" placeholder="Building Address" [ngModel]="currentRoom.buildingAddress"
+                        (ngModelChange)="currentRoom.buildingAddress = $event" style="flex-grow: 1;">
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="capacity" style="font-weight: bold; font-size: 1.1em;">Capacity:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Capacity" [ngModel]="currentRoom.capacity"
+                        (ngModelChange)="currentRoom.capacity = $event" style="flex-grow: 1;" min="0" max="300">
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="type" style="font-weight: bold; font-size: 1.1em;">Type:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="type" name="type" [ngModel]="currentRoom.type" (ngModelChange)="currentRoom.type = $event" style="flex-grow: 1;">
+                        <option value="1">Theory</option>
+                        <option value="2">Laboratory</option>
+                    </select>
+                </div>
+            </div>
+            <div *ngIf="currentRoom.type == 2" style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="computersCount" style="font-weight: bold; font-size: 1.1em;">Computers Count:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="number" class="form-control" id="computersCount" name="computersCount" placeholder="Computers Count" [ngModel]="currentRoom.computersCount"
+                        (ngModelChange)="currentRoom.computersCount = $event" style="flex-grow: 1;" min="0" max="300">
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="hasProjector" style="font-weight: bold; font-size: 1.1em;">Has Projector:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="checkbox" id="hasProjector" name="hasProjector" [ngModel]="currentRoom.hasProjector"
+                        (ngModelChange)="currentRoom.hasProjector = $event" style="flex-grow: 1;">
+                </div>
+            </div>            
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="isLocked" style="font-weight: bold; font-size: 1.1em;">Is Locked:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="checkbox" id="isLocked" name="isLocked" [ngModel]="currentRoom.isLocked"
+                        (ngModelChange)="currentRoom.isLocked = $event" style="flex-grow: 1;">
+                </div>
+            </div>
+            <div style="width: 25%; margin-left: 55%;" class="d-grid p-2">
+                <button class="btn btn-primary btn-block" type="button" (click)="SubmitRoom()"><span style="white-space: nowrap;">Submit Room</span></button>
+                <div [ngClass]="load" style="text-align: center; margin-top: 10px;">
+                    <strong>Working...</strong>
+                </div>            
+            </div>
+        </div>
+    </div>
+
+    <div style="flex: 0.8; border: 1px solid #ccc; padding: 25px; padding-left: 35px; height: 400px; overflow-y: auto;">
+        <div style="margin-bottom: 2%;">
+            <strong style="font-size: 1.3em;">Output:</strong>
+        </div>
+        <div *ngIf="resultRoom.id !== undefined && resultRoom.id !== null" style="font-size: 1.1em; padding-left: 10px;">
+            <strong>ID: </strong> <span style="font-size: 1.15em;">{{ resultRoom.id }}</span><br>
+            <strong>Name: </strong> <span style="font-size: 1.15em;">{{ resultRoom.name }}</span><br>
+            <strong>Building: </strong> <span style="font-size: 1.15em;">{{ resultRoom.building }}</span><br>
+            <strong>Building Address: </strong> <span style="font-size: 1.15em;">{{ resultRoom.buildingAddress }}</span><br>
+            <strong>Capacity: </strong> <span style="font-size: 1.15em;">{{ resultRoom.capacity }}</span><br>
+            <strong>Type: </strong><span style="font-size: 1.15em;">{{ resultRoom.type == 1 ? 'Theory' : resultRoom.type == 2 ? 'Laboratory' : '' }}</span><br>
+            <strong>Computers Count: </strong> <span style="font-size: 1.15em;">{{ resultRoom.computersCount }}</span><br>
+            <strong>Has Projector: </strong> <span style="font-size: 1.15em;">{{ resultRoom.hasProjector }}</span><br>
+            <strong>Is Locked: </strong> <span style="font-size: 1.15em;">{{ resultRoom.isLocked }}</span><br>
+        </div>
+    </div>
+</div>

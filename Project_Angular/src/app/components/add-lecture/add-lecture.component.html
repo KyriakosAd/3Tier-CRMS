@@ -1,0 +1,84 @@
+<h1 class="text-center" style="margin-bottom: 6%;">Add Lecture</h1>
+<div style="display: flex;">
+    <div style="flex: 1; margin-right: 20px; width: 90%;">
+        <div id="lectureForm" [ngClass]="disabled">
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="type" style="font-weight: bold; font-size: 1.1em;">Type:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <select class="form-select" id="type" name="type" [ngModel]="currentLecture.type" (ngModelChange)="currentLecture.type = $event" style="flex-grow: 1;">
+                        <option value="Theory">Theory</option>
+                        <option value="Laboratory">Laboratory</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="courseId" style="font-weight: bold; font-size: 1.1em;">Course ID:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="number" class="form-control" id="courseId" name="courseId" placeholder="Course ID" [ngModel]="currentLecture.courseId"
+                        (ngModelChange)="currentLecture.courseId = $event" style="flex-grow: 1;" min="0" max="10000">
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="courseName" style="font-weight: bold; font-size: 1.1em;">Course Name:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="text" class="form-control" id="courseName" name="courseName" placeholder="Course Name" [ngModel]="currentLecture.courseName"
+                        (ngModelChange)="currentLecture.courseName = $event" style="flex-grow: 1;">
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="semester" style="font-weight: bold; font-size: 1.1em;">Semester:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="number" class="form-control" id="semester" name="semester" placeholder="Semester" [ngModel]="currentLecture.semester"
+                        (ngModelChange)="currentLecture.semester = $event" style="flex-grow: 1;" min="1" max="10">
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="department" style="font-weight: bold; font-size: 1.1em;">Department:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="text" class="form-control" id="department" name="department" placeholder="Department" [ngModel]="currentLecture.department"
+                        (ngModelChange)="currentLecture.department = $event" style="flex-grow: 1;">
+                </div>
+            </div>
+            <div style="display: flex; margin-bottom: 10px; align-items: center;">
+                <div style="min-width: 25%; white-space: nowrap;">
+                    <label for="totalHours" style="font-weight: bold; font-size: 1.1em;">Total Hours:</label>
+                </div>
+                <div style="width: 50%; margin-left:5%;">
+                    <input type="number" class="form-control" id="totalHours" name="totalHours" placeholder="Total Hours" [ngModel]="currentLecture.totalHours"
+                        (ngModelChange)="currentLecture.totalHours = $event" style="flex-grow: 1;" min="1" max="1000">
+                </div>
+            </div>
+            <div style="width: 25%; margin-left: 55%;" class="d-grid p-2">
+                <button class="btn btn-primary btn-block" type="button" (click)="SubmitLecture()"><span style="white-space: nowrap;">Submit Lecture</span></button>
+                <div [ngClass]="load" style="text-align: center; margin-top: 10px;">
+                    <strong>Working...</strong>
+                </div>            
+            </div>
+        </div>
+    </div>
+    
+    <div style="flex: 0.8; border: 1px solid #ccc; padding: 25px; padding-left: 35px; height: 400px; overflow-y: auto; margin-bottom: 10%;">
+        <div style="margin-bottom: 2%;">
+            <strong style="font-size: 1.3em;">Output:</strong>
+        </div>
+        <div *ngIf="resultLecture.id !== undefined && resultLecture.id !== null" style="font-size: 1.1em; padding-left: 10px;">
+            <strong>ID: </strong> <span style="font-size: 1.15em;">{{resultLecture.id}}</span><br>
+            <strong>Type: </strong> <span style="font-size: 1.15em;">{{resultLecture.type}}</span><br>
+            <strong>Course ID: </strong> <span style="font-size: 1.15em;">{{resultLecture.courseId}}</span><br>
+            <strong>Course Name: </strong> <span style="font-size: 1.15em;">{{resultLecture.courseName}}</span><br>
+            <strong>Semester: </strong> <span style="font-size: 1.15em;">{{resultLecture.semester}}</span><br>
+            <strong>Department: </strong> <span style="font-size: 1.15em;">{{resultLecture.department}}</span><br>
+            <strong>Total Hours: </strong> <span style="font-size: 1.15em;">{{resultLecture.totalHours}}</span><br>
+        </div>
+    </div>
+</div>
