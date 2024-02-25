@@ -1,4 +1,4 @@
-# 3-Tier Solution for a Classroom Management System [![License](https://img.shields.io/github/license/KyriakosAd/3Tier-CRMS.svg)](https://github.com/KyriakosAd/3Tier-CRMS/blob/main/LICENSE)
+# 3-Tier Solution for a Classroom Management System [![License](https://img.shields.io/github/license/KyriakosAd/3Tier-CRMS.svg)](https://github.com/KyriakosAd/3Tier-CRMS/blob/main/LICENSE) [![Size](https://img.shields.io/github/repo-size/KyriakosAd/3Tier-CRMS.svg)](https://github.com/KyriakosAd/3Tier-CRMS)
 Used **C#** with **.NET** (Core) to create the **API** and divided the system into **3 tiers**:
  1) **DAL** - handles database communication with the **Microsoft SQL Server** through **EntityFramework**.
  2) **LOGIC** - handles the logic of the methods before they are sent to the frontend.
